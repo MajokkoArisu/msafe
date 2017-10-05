@@ -5,6 +5,7 @@ safezone.players = {}
 safezone.gatedests = {}
 --safezone.bardests = {}
 safezone.gatesafe = nil
+safezone.inside = {}
 --safezone.barsafe = nil
 safezone.gatestr = "Disabled"
 --safezone.barstr = "Disabled"
@@ -81,7 +82,6 @@ function safezone.gatezone()
 					--safezone.regreg(ply)
 					if safezone.Gatecheck(ply.position) == true then
 					safezone.gateenter(ply)
-					safezone.gateply(ply)
 					else
 					safezone.gateexit(ply)
 					end
@@ -117,11 +117,19 @@ k.isHolstered = 3
 end
 
 function safezone.gateenter(ply)
-
+if safezone.inside[ply.id] ~= true then
+		for w=0,19 do 
+		ply:Take('weapon',w)
+		end
+		safezone.inside[ply.id] = true
+end
 end
 
 function safezone.gateexit(ply)
-
+if safezone.inside[ply.id] == true
+		safezone.inside[ply.id] = false
+		ply.weapon = 3
+end
 end
 
 AddListener('JPLUA_EVENT_RUNFRAME', safezone.gatezone)
