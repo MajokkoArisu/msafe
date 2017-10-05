@@ -3,17 +3,17 @@ safezone.plugin = RegisterPlugin('msafezone','1.0.0')
 if GetMap() ~= 'mp/ffa3' then return end
 safezone.players = {}
 safezone.gatedests = {}
-safezone.bardests = {}
+--safezone.bardests = {}
 safezone.gatesafe = nil
-safezone.barsafe = nil
+--safezone.barsafe = nil
 safezone.gatestr = "Disabled"
-safezone.barstr = "Disabled"
+--safezone.barstr = "Disabled"
 safezone.gateturn = true
-safezone.barturn = false
+--safezone.barturn = false
 local max = GetCvar('sv_maxclients'):GetInteger()
 
 safezone.gatedests['mp/ffa3'] = {525, 870, -1460, -1274, -120, 200}
-safezone.bardests['mp/ffa3'] = {1238, 2961, -943, 317, -168, 667}
+--safezone.bardests['mp/ffa3'] = {1238, 2961, -943, 317, -168, 667}
 
 function safezone.Gatecheck(k)
 	if 
@@ -35,7 +35,7 @@ function safezone.Gatecheck(k)
 	end
 end
 
-function safezone.Barcheck(k)
+--[[function safezone.Barcheck(k)
 	if 
 		k.x >= safezone.bardests[GetMap()][1]
 			and 
@@ -71,14 +71,14 @@ function safezone.regreg(k)
 	tt.on = false
 	
 	safezone.players[ply.id] = tt
-end
+end--]]
 
 function safezone.gatezone()
 	if safezone.gateturn == true then
 		for i = 0,max do
 			if GetPlayer(i) ~= nil and GetPlayer(i).team ~= 'spectator' then
 				local ply = GetPlayer(i)
-					safezone.regreg(ply)
+					--safezone.regreg(ply)
 					if safezone.Gatecheck(ply.position) == true then
 					safezone.gateenter(ply)
 					safezone.gateply(ply)
@@ -90,7 +90,7 @@ function safezone.gatezone()
 	end
 end
 
-function safezone.gateply2(ply)
+--[[function safezone.gateply2(ply)
 	if safezone.checksafe(ply) == true and safezone.Gatecheck(ply.position) == true then
 			if not tt or tt == 0 then
 				SendConsoleCommand(2, 'zzf '..ply.id..'')
@@ -108,7 +108,7 @@ function safezone.gateply2(ply)
 				SendReliableCommand(-1, 'print "checksafe false tt = 0 \n"')
 			end
 	end
-end
+end--]]
 
 function safezone.gateply(k)
 k.weapon = 3
@@ -117,18 +117,11 @@ k.isHolstered = 3
 end
 
 function safezone.gateenter(ply)
-local kt = safezone.players[ply.id]['on']
-	if kt == false then
-		SendConsoleCommand(2, 'zzf '..ply.id..'')
-		kt = true
-	end
+
 end
 
 function safezone.gateexit(ply)
-	if kt == true then
-		SendConsoleCommand(2, 'zzf '..ply.id..'')
-		kt == false
-	end
+
 end
 
 AddListener('JPLUA_EVENT_RUNFRAME', safezone.gatezone)
