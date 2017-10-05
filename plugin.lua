@@ -128,7 +128,7 @@ end
 function safezone.gateexit(ply)
 if safezone.inside[ply.id] == true
 		safezone.inside[ply.id] = false
-		ply.weapon = 3
+		ply:Give('weapon',3)
 end
 end
 
